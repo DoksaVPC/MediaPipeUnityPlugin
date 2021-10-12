@@ -122,23 +122,23 @@ namespace Mediapipe.Unity.HandTracking {
     }
 
     void OnPalmDetectectionsOutput(List<Detection> palmDetections) {
-      palmDetectionsAnnotationController.DrawLater(palmDetections);
+      //palmDetectionsAnnotationController.DrawLater(palmDetections);
     }
 
     void OnHandRectsFromPalmDetectionsOutput(List<NormalizedRect> handRectsFromPalmDetections) {
-      handRectsFromPalmDetectionsAnnotationController.DrawLater(handRectsFromPalmDetections);
+      //handRectsFromPalmDetectionsAnnotationController.DrawLater(handRectsFromPalmDetections);
     }
 
     void OnHandLandmarksOutput(List<NormalizedLandmarkList> handLandmarks) {
-      handLandmarksAnnotationController.DrawLater(handLandmarks);
+      //handLandmarksAnnotationController.DrawLater(handLandmarks);
     }
 
     void OnHandRectsFromLandmarksOutput(List<NormalizedRect> handRectsFromLandmarks) {
-      handRectsFromLandmarksAnnotationController.DrawLater(handRectsFromLandmarks);
+      //handRectsFromLandmarksAnnotationController.DrawLater(handRectsFromLandmarks);
     }
 
     void OnHandednessOutput(List<ClassificationList> handedness) {
-      handLandmarksAnnotationController.DrawLater(handedness);
+      //handLandmarksAnnotationController.DrawLater(handedness);
     }
   }
 }

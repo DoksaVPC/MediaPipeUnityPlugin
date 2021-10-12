@@ -9,7 +9,7 @@ namespace Mediapipe.Unity {
 
       switch (sourceType) {
         case ImageSource.SourceType.Camera: {
-          imageSource = obj.GetComponent<WebCamSource>();
+          imageSource = obj.GetComponent<CameraSource>();
           break;
         }
         case ImageSource.SourceType.Image: {

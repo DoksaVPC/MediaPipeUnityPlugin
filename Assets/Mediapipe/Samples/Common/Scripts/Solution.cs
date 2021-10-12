@@ -6,7 +6,7 @@ namespace Mediapipe.Unity {
   public abstract class Solution : MonoBehaviour {
     protected virtual string TAG { get { return this.GetType().Name; } }
 
-    protected Bootstrap bootstrap;
+    protected SceneInitializer bootstrap;
     protected bool isPaused;
 
     protected virtual IEnumerator Start() {
@@ -17,7 +17,7 @@ namespace Mediapipe.Unity {
         yield break;
       }
 
-      bootstrap = bootstrapObj.GetComponent<Bootstrap>();
+      bootstrap = bootstrapObj.GetComponent<SceneInitializer>();
       yield return new WaitUntil(() => bootstrap.isFinished);
 
       Play();
