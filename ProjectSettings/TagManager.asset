@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Global Resource
   - ImageSource
+  - SceneSelector
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - 3D UI
   - 
   - 
   - 

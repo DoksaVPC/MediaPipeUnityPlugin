@@ -12,6 +12,8 @@ namespace Mediapipe.Unity.HandTracking {
     [SerializeField] NormalizedRectListAnnotationController handRectsFromLandmarksAnnotationController;
     [SerializeField] HandTrackingGraph graphRunner;
     [SerializeField] TextureFramePool textureFramePool;
+    [SerializeField]
+    private bool landmarkMode = false;
 
     Coroutine coroutine;
 
@@ -130,7 +132,11 @@ namespace Mediapipe.Unity.HandTracking {
     }
 
     void OnHandLandmarksOutput(List<NormalizedLandmarkList> handLandmarks) {
-      //handLandmarksAnnotationController.DrawLater(handLandmarks);
+            if (landmarkMode)
+            {
+                handLandmarksAnnotationController.DrawLater(handLandmarks);
+            }
+      
     }
 
     void OnHandRectsFromLandmarksOutput(List<NormalizedRect> handRectsFromLandmarks) {
@@ -138,7 +144,14 @@ namespace Mediapipe.Unity.HandTracking {
     }
 
     void OnHandednessOutput(List<ClassificationList> handedness) {
-      //handLandmarksAnnotationController.DrawLater(handedness);
+            if (landmarkMode)
+            {
+                handLandmarksAnnotationController.DrawLater(handedness);
+            }
     }
-  }
+        private void OnDisable()
+        {
+            Stop();
+        }
+    }
 }

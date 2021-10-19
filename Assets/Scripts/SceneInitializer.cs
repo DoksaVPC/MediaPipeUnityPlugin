@@ -24,12 +24,15 @@ namespace Mediapipe.Unity
         public InferenceMode inferenceMode { get; private set; }
         public bool isFinished { get; private set; }
 
+        private SceneSelector sceneSelector;
+
         IEnumerator Start()
         {
             Debug.Log("Setting global flags...");
             GlobalConfigManager.SetFlags();
 
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
+            sceneSelector = GameObject.FindGameObjectWithTag("SceneSelector").GetComponent<SceneSelector>();
 
             Debug.Log("Initializing AssetLoader...");
             switch (assetLoaderType)
@@ -71,7 +74,7 @@ namespace Mediapipe.Unity
             isFinished = true;
 
             Debug.Log("Loading hand tracking scene...");
-            var sceneLoadReq = SceneManager.LoadSceneAsync(1);
+            var sceneLoadReq = SceneManager.LoadSceneAsync(sceneSelector.SceneIndex);
             yield return new WaitUntil(() => sceneLoadReq.isDone);
         }
 
@@ -79,7 +82,12 @@ namespace Mediapipe.Unity
         {
             if (Input.GetButtonDown("Cancel"))
             {
-                Application.Quit();
+                ImageSourceProvider.imageSource.Stop();
+                Destroy(imageSource);
+                Destroy(sceneSelector);
+                GpuManager.Shutdown();
+                Destroy(gameObject);
+                SceneManager.LoadSceneAsync(0);
             }
         }
 
@@ -97,6 +105,11 @@ namespace Mediapipe.Unity
         }
 
         void OnApplicationQuit()
+        {
+            GpuManager.Shutdown();
+        }
+
+        private void OnDisable()
         {
             GpuManager.Shutdown();
         }

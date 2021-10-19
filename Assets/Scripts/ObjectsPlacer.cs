@@ -19,6 +19,8 @@ public class ObjectsPlacer : MonoBehaviour
     private GameObject jewelPrefab;
     [SerializeField]
     private JewelType jewelType;
+    [SerializeField]
+    private bool jewelFlips = false;
 
     private enum JewelType
     {
@@ -132,13 +134,17 @@ public class ObjectsPlacer : MonoBehaviour
     {
         float handSizeFactor = GetHandSize() * 2f;
         int handednessValue = 1;
-        if (currentHand == "Left")
+        if (jewelFlips)
         {
-            handednessValue = 1;
-        } else
-        {
-            handednessValue = -1;
-        }
+            if (currentHand == "Left")
+            {
+                handednessValue = 1;
+            }
+            else
+            {
+                handednessValue = -1;
+            }
+        }      
 
         for (int i = 0; i < landmarkSpheres.Length; i++)
         {
