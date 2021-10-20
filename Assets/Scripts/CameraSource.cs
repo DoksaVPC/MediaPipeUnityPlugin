@@ -170,7 +170,7 @@ namespace Mediapipe.Unity
                 }
 #elif UNITY_IOS
         if (!Application.HasUserAuthorization(UserAuthorization.WebCam)) {
-          Logger.LogWarning(TAG, "Not permitted to use WebCam");
+          Debug.Log("Not permitted to use WebCam");
           yield break;
         }
 #endif
