@@ -124,7 +124,7 @@ public class ObjectsPlacer : MonoBehaviour
                     }
 
                     landmarkRawPositions[i] = new Vector3(pixelWidth - (handLandmarks[0].Landmark[i].X * pixelWidth), pixelHeight - heightDelta / 2 - (handLandmarks[0].Landmark[i].Y * trueHeight), 10 + zDelta*10);
-                    landmarkNormalizedValues[i] = new Vector3(handLandmarks[0].Landmark[i].X, handLandmarks[0].Landmark[i].Y * trueHeight / pixelWidth, zDelta);
+                    landmarkNormalizedValues[i] = new Vector3(handLandmarks[0].Landmark[i].X, handLandmarks[0].Landmark[i].Y * textureHeight / textureWidth, zDelta);
                 }
             }
         }
