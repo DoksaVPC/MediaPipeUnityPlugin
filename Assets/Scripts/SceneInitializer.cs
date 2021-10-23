@@ -28,7 +28,6 @@ namespace Mediapipe.Unity
 
         IEnumerator Start()
         {
-            Debug.Log("Setting global flags...");
             GlobalConfigManager.SetFlags();
 
             Screen.sleepTimeout = SleepTimeout.NeverSleep;

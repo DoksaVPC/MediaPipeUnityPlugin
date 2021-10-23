@@ -10,9 +10,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class ScrollRectNested : ScrollRect
 {
-    [Header("Additional Fields")]
-    [SerializeField]
-    ScrollRect parentScrollRect;
+    public ScrollRect parentScrollRect { get; set; }
 
     bool routeToParent = false;
 

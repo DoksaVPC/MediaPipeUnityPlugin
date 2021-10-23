@@ -12,6 +12,6 @@ public class RotateAnimation : MonoBehaviour
     void Update()
     {
         rotation += Time.deltaTime * rotationSpeed;
-        gameObject.transform.rotation = Quaternion.Euler(-30, rotation, 1);
+        gameObject.transform.rotation = Quaternion.Euler(-35, rotation, 1);
     }
 }

@@ -279,8 +279,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1004520823}
-  - component: {fileID: 1004520821}
-  - component: {fileID: 1004520820}
   - component: {fileID: 1004520822}
   m_Layer: 0
   m_Name: Image Source
@@ -289,42 +287,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1004520820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1004520819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04085488e5fac35599866a2a6fceeda3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  availableSources: []
---- !u!114 &1004520821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1004520819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd7955705ab46c72b9124bb116a2dca9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  availableSources: []
-  defaultAvailableResolutions:
-  - width: 512
-    height: 512
-    frameRate: 0
-  - width: 640
-    height: 480
-    frameRate: 0
-  - width: 1280
-    height: 720
-    frameRate: 0
 --- !u!114 &1004520822
 MonoBehaviour:
   m_ObjectHideFlags: 0

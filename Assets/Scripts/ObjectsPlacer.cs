@@ -16,17 +16,7 @@ public class ObjectsPlacer : MonoBehaviour
     [SerializeField]
     private GameObject bonePrefab;
     [SerializeField]
-    private GameObject jewelPrefab;
-    [SerializeField]
-    private JewelType jewelType;
-    [SerializeField]
-    private bool jewelFlips = false;
-
-    private enum JewelType
-    {
-        Ring,
-        Bracelet
-    }
+    private JewelProperties jewelProperties;
 
     private GameObject[] landmarkSpheres = new GameObject[21];
     private GameObject[] handBones = new GameObject[21];
@@ -89,7 +79,7 @@ public class ObjectsPlacer : MonoBehaviour
             handBones[i].SetActive(false);
             landmarkSpheres[i].SetActive(false);
         }
-        jewel = Instantiate(jewelPrefab);
+        jewel = Instantiate(jewelProperties.JewelPrefab);
         jewel.SetActive(false);
 
         graph.OnHandLandmarksOutput.AddListener(OnLandmarksOutput);
@@ -134,7 +124,7 @@ public class ObjectsPlacer : MonoBehaviour
     {
         float handSizeFactor = GetHandSize() * 2f;
         int handednessValue = 1;
-        if (jewelFlips)
+        if (jewelProperties.Filps)
         {
             if (currentHand == "Left")
             {
@@ -157,8 +147,11 @@ public class ObjectsPlacer : MonoBehaviour
             handBone.transform.localScale = new Vector3(handSizeFactor * landmarkBaseSize * 0.9f, handBone.transform.localScale.y, handSizeFactor * landmarkBaseSize * 0.9f);
         }
 
-        jewel.transform.localScale = new Vector3(-1, handednessValue, 1) * (handSizeFactor * landmarkBaseSize);
-        PlaceJewel();
+        if (jewel != null)
+        {
+            jewel.transform.localScale = new Vector3(-1, handednessValue, 1) * (handSizeFactor * landmarkBaseSize);
+            PlaceJewel();
+        }      
 
         if(textureWidth == 0 || textureHeight == 0)
         {
@@ -256,14 +249,14 @@ public class ObjectsPlacer : MonoBehaviour
             palmNormal = Vector3.Cross(wristIndex, wristPinky) * -1;
         }
         
-        if (jewelType == JewelType.Ring)
+        if (jewelProperties.Type == JewelProperties.JewelType.Ring)
         {        
             Quaternion rotation = Quaternion.LookRotation(landmarkSpheres[14].transform.position - landmarkSpheres[13].transform.position, palmNormal);
             float distance = 0.6f;
             Vector3 ringCoordinate = (1 - distance) * landmarkSpheres[13].transform.position + distance * landmarkSpheres[14].transform.position;
             jewel.transform.rotation = rotation;
             jewel.transform.position = ringCoordinate;
-        } else if (jewelType == JewelType.Bracelet)
+        } else if (jewelProperties.Type == JewelProperties.JewelType.Bracelet)
         {
             Vector3 forwardVector = landmarkSpheres[9].transform.position - landmarkSpheres[0].transform.position;
             Quaternion rotation = Quaternion.LookRotation(forwardVector, palmNormal);
@@ -295,6 +288,16 @@ public class ObjectsPlacer : MonoBehaviour
         if (!handRecognized)
         {
             handRecognized = true;
+        }
+    }
+
+    public void ChangeJewel(JewelProperties properties)
+    {
+        jewelProperties = properties;
+        if (jewel != null)
+        {
+            Destroy(jewel);
+            jewel = Instantiate(properties.JewelPrefab);
         }
     }
 }
