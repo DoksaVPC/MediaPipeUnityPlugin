@@ -23,6 +23,7 @@ public class ObjectsPlacer : MonoBehaviour
     private GameObject jewel;
 
     private CameraSource cameraSource;
+    private SceneInitializer sceneInitializer;
     private float textureWidth;
     private float textureHeight;
     private float aspectRatio;
@@ -44,8 +45,11 @@ public class ObjectsPlacer : MonoBehaviour
     private float handSwitchingRemainingTime;
     private bool timerStarted = false;
 
-    private const float landmarkBaseSize = 0.85f;
+    private const float landmarkBaseSize = 0.0008f;
     private const float zNegativeRecalibration = 0.25f;
+    private float jewelSize;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +57,9 @@ public class ObjectsPlacer : MonoBehaviour
         pixelWidth = cam.pixelWidth;
         pixelHeight = cam.pixelHeight;
         cameraSource = GameObject.FindGameObjectWithTag("ImageSource").GetComponent<CameraSource>();
+        sceneInitializer = GameObject.FindGameObjectWithTag("Global Resource").GetComponent<SceneInitializer>();
+        jewelProperties = sceneInitializer.JewelProperties;
+        SetJewelSize(1f);
         for (int i = 0; i < landmarkSpheres.Length; i++)
         {
             landmarkSpheres[i] = Instantiate(landmarkSpherePrefab);
@@ -114,7 +121,7 @@ public class ObjectsPlacer : MonoBehaviour
                     }
 
                     landmarkRawPositions[i] = new Vector3(pixelWidth - (handLandmarks[0].Landmark[i].X * pixelWidth), pixelHeight - heightDelta / 2 - (handLandmarks[0].Landmark[i].Y * trueHeight), 10 + zDelta*10);
-                    landmarkNormalizedValues[i] = new Vector3(handLandmarks[0].Landmark[i].X, handLandmarks[0].Landmark[i].Y * textureHeight / textureWidth, zDelta);
+                    landmarkNormalizedValues[i] = new Vector3(handLandmarks[0].Landmark[i].X, handLandmarks[0].Landmark[i].Y, zDelta);
                 }
             }
         }
@@ -139,17 +146,17 @@ public class ObjectsPlacer : MonoBehaviour
         for (int i = 0; i < landmarkSpheres.Length; i++)
         {
             landmarkSpheres[i].transform.position = cam.ScreenToWorldPoint(landmarkRawPositions[i]);
-            landmarkSpheres[i].transform.localScale = Vector3.one * (handSizeFactor * landmarkBaseSize);
+            landmarkSpheres[i].transform.localScale = Vector3.one * (handSizeFactor * landmarkBaseSize * jewelSize);
         }
 
         foreach(GameObject handBone in handBones)
         {
-            handBone.transform.localScale = new Vector3(handSizeFactor * landmarkBaseSize * 0.9f, handBone.transform.localScale.y, handSizeFactor * landmarkBaseSize * 0.9f);
+            handBone.transform.localScale = new Vector3(handSizeFactor * landmarkBaseSize * 0.9f * jewelSize, handBone.transform.localScale.y, handSizeFactor * landmarkBaseSize * 0.9f * jewelSize);
         }
 
         if (jewel != null)
         {
-            jewel.transform.localScale = new Vector3(-1, handednessValue, 1) * (handSizeFactor * landmarkBaseSize);
+            jewel.transform.localScale = new Vector3(-1, handednessValue, 1) * (handSizeFactor * landmarkBaseSize * jewelSize);
             PlaceJewel();
         }      
 
@@ -193,7 +200,7 @@ public class ObjectsPlacer : MonoBehaviour
 
     private float GetHandSize()
     {
-        return Vector3.Distance(landmarkNormalizedValues[5], landmarkNormalizedValues[17]);
+        return Vector3.Distance(landmarkRawPositions[5], landmarkRawPositions[17]);
     }
 
     private void ToggleLandmarks()
@@ -252,7 +259,7 @@ public class ObjectsPlacer : MonoBehaviour
         if (jewelProperties.Type == JewelProperties.JewelType.Ring)
         {        
             Quaternion rotation = Quaternion.LookRotation(landmarkSpheres[14].transform.position - landmarkSpheres[13].transform.position, palmNormal);
-            float distance = 0.6f;
+            float distance = 0.35f;
             Vector3 ringCoordinate = (1 - distance) * landmarkSpheres[13].transform.position + distance * landmarkSpheres[14].transform.position;
             jewel.transform.rotation = rotation;
             jewel.transform.position = ringCoordinate;
@@ -299,5 +306,10 @@ public class ObjectsPlacer : MonoBehaviour
             Destroy(jewel);
             jewel = Instantiate(properties.JewelPrefab);
         }
+    }
+
+    public void SetJewelSize(float size)
+    {
+        jewelSize = size;
     }
 }

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7ab2377425496f749a984615e7c0eec5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - objectsPlacer: {instanceID: 0}
+  - filledTexture: {fileID: 2800000, guid: d28b41fc7093f184098d2bd122294f88, type: 3}
+  - buttonRenderer: {instanceID: 0}
+  - buttonText: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

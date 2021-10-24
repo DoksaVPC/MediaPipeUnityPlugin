@@ -6,27 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: 9e7b641d888e42240a05758e1af2e6fc
+  - enabled: 1
     path: Assets/Scenes/SelectionScreen.unity
     guid: a72ae29eb9f0fe54da24b44c0cfdc65a
   - enabled: 1
-    path: Assets/Scenes/MediaPipeInitializerScene.unity
-    guid: 275ae39984f5f5842b30d04164a16dfb
-  - enabled: 1
-    path: Assets/Scenes/Astro.unity
-    guid: 850511e3e70bf6d418c50a75cfcf7e1b
-  - enabled: 1
-    path: Assets/Scenes/Orotrasp.unity
-    guid: c86366bb422805e4d9f404595b506b25
-  - enabled: 1
-    path: Assets/Scenes/Cirkuita.unity
-    guid: d3e46f21c33889f4bac5470ddd70b060
-  - enabled: 1
-    path: Assets/Scenes/BlackRing.unity
-    guid: 9a217505b5a91954bb0c636e13a05cae
-  - enabled: 1
-    path: Assets/Scenes/OrotraspRing.unity
-    guid: 8d0e4042a26c3c146a08e96304dffe56
-  - enabled: 1
-    path: Assets/Scenes/Landmarks.unity
-    guid: 7f83f3db01bb8284e904c71d1354a286
+    path: Assets/Scenes/TryOnScene.unity
+    guid: b84546b3ef2541a448456cef0711cd75
   m_configObjects: {}

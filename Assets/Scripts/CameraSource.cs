@@ -121,7 +121,7 @@ namespace Mediapipe.Unity
         public override bool isPlaying { get { return webCamTexture == null ? false : webCamTexture.isPlaying; } }
         bool isInitialized;
 
-        IEnumerator Start()
+        public IEnumerator InitializeCameraSource()
         {
             yield return GetPermission();
 

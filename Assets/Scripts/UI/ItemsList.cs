@@ -13,6 +13,8 @@ public class ItemsList : MonoBehaviour
     [SerializeField]
     private GameObject itemsContainer;
 
+    private SceneInitializer sceneInitializer;
+
     [SerializeField]
     private Row[] rows;
 
@@ -68,6 +70,11 @@ public class ItemsList : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        sceneInitializer = GameObject.FindGameObjectWithTag("Global Resource").GetComponent<SceneInitializer>();
+    }
+
     private void Start()
     {
         int itemsCount = 0;
@@ -78,14 +85,9 @@ public class ItemsList : MonoBehaviour
             itemsRowContainer.InitializeRow(row.Name, parentScrollRect);
             foreach(Item item in row.Items)
             {
-                itemsRowContainer.CreateItemPanel(item.Name, item.Label, item.Jewel, itemsCount, item.Properties, this);
+                itemsRowContainer.CreateItemPanel(item.Name, item.Label, item.Jewel, itemsCount, item.Properties, sceneInitializer);
                 itemsCount++;
             }
         }
-    }
-
-    public void StartAR(JewelProperties properties)
-    {
-        SceneManager.LoadSceneAsync(1);
     }
 }

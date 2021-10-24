@@ -22,5 +22,9 @@ namespace Mediapipe.Unity {
         }
       }
     }
+        public static void SwitchSource(CameraSource cameraSource)
+        {
+            imageSource = cameraSource;
+        }
   }
 }

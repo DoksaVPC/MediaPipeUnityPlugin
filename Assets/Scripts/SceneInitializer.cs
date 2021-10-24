@@ -3,9 +3,8 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Mediapipe.Unity;
 
-namespace Mediapipe.Unity
-{
     public class SceneInitializer : MonoBehaviour
     {
         [System.Serializable]
@@ -17,21 +16,28 @@ namespace Mediapipe.Unity
         }
 
         [SerializeField] private GameObject imageSource;
+        private CameraSource cameraSource;
         [SerializeField] private ImageSource.SourceType defaultImageSource;
         [SerializeField] private InferenceMode preferableInferenceMode;
         [SerializeField] private AssetLoaderType assetLoaderType;
 
+        private JewelProperties jewelProperties;
+        public JewelProperties JewelProperties
+        {
+            get { return jewelProperties; }
+        }
+
         public InferenceMode inferenceMode { get; private set; }
         public bool isFinished { get; private set; }
-
-        private SceneSelector sceneSelector;
 
         IEnumerator Start()
         {
             GlobalConfigManager.SetFlags();
 
+            ApplicationChrome.statusBarState = ApplicationChrome.States.Visible;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
-            sceneSelector = GameObject.FindGameObjectWithTag("SceneSelector").GetComponent<SceneSelector>();
+
+            cameraSource = imageSource.GetComponent<CameraSource>();
 
             Debug.Log("Initializing AssetLoader...");
             switch (assetLoaderType)
@@ -52,7 +58,6 @@ namespace Mediapipe.Unity
                         AssetLoader.Provide(new LocalResourceManager());
                         break;
 #else
-          Logger.LogError("LocalResourceManager is only supported on UnityEditor");
           yield break;
 #endif
                     }
@@ -66,28 +71,14 @@ namespace Mediapipe.Unity
             }
 
             Debug.Log("Preparing ImageSource...");
-            ImageSourceProvider.SwitchSource(defaultImageSource);
+            ImageSourceProvider.SwitchSource(imageSource.GetComponent<CameraSource>());
             DontDestroyOnLoad(imageSource);
-
             DontDestroyOnLoad(gameObject);
             isFinished = true;
 
             Debug.Log("Loading hand tracking scene...");
-            var sceneLoadReq = SceneManager.LoadSceneAsync(sceneSelector.SceneIndex);
+            var sceneLoadReq = SceneManager.LoadSceneAsync(1);
             yield return new WaitUntil(() => sceneLoadReq.isDone);
-        }
-
-        private void Update()
-        {
-            if (Input.GetButtonDown("Cancel"))
-            {
-                ImageSourceProvider.imageSource.Stop();
-                Destroy(imageSource);
-                Destroy(sceneSelector);
-                GpuManager.Shutdown();
-                Destroy(gameObject);
-                SceneManager.LoadSceneAsync(0);
-            }
         }
 
         void DecideInferenceMode()
@@ -112,5 +103,12 @@ namespace Mediapipe.Unity
         {
             GpuManager.Shutdown();
         }
+
+        public void StartTryOn(JewelProperties properties)
+        {
+            jewelProperties = properties;
+            SceneManager.LoadSceneAsync(2);
+            StartCoroutine(cameraSource.InitializeCameraSource());
+
     }
-}
+    }

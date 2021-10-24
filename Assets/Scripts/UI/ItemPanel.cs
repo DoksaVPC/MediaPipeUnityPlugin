@@ -15,15 +15,15 @@ public class ItemPanel : MonoBehaviour
     private Button button;
 
     private JewelProperties jewelProperties;
-    private ItemsList itemsManager;
+    private SceneInitializer sceneInitializer;
 
-    public void InitializeItem(string itemName, string itemLabel, RenderTexture texture, JewelProperties properties, ItemsList manager)
+    public void InitializeItem(string itemName, string itemLabel, RenderTexture texture, JewelProperties properties, SceneInitializer initializer)
     {
         SetItemTexts(itemName, itemLabel);
         SetTexture(texture);
-        itemsManager = manager;
+        sceneInitializer = initializer;
         jewelProperties = properties;
-        button.onClick.AddListener(SetJewelProperties);
+        button.onClick.AddListener(StartARScene);
     }
 
     private void SetItemTexts(string itemName, string itemLabel)
@@ -36,9 +36,9 @@ public class ItemPanel : MonoBehaviour
         rawImage.texture = texture;
     }
 
-    private void SetJewelProperties()
+    private void StartARScene()
     {
-        itemsManager.StartAR(jewelProperties);
+        sceneInitializer.StartTryOn(jewelProperties);
     }
 
 }
