@@ -11,6 +11,8 @@ namespace Mediapipe.Unity {
     }
 
     [SerializeField] FitMode fitMode;
+        [SerializeField] private RectTransform headerRect;
+        [SerializeField] private int headerHeight = 182;
 
     void LateUpdate() {
       var rectTransform = GetComponent<RectTransform>();
@@ -26,8 +28,17 @@ namespace Mediapipe.Unity {
       var h = height * ratio;
 
       if (fitMode == FitMode.FitWidth || (fitMode == FitMode.Expand && h >= parentRect.height) || (fitMode == FitMode.Shrink && h <= parentRect.height)) {
+                float deltaHeight = parentRect.height - h;
+                rectTransform.pivot = new Vector2(0.5f - (deltaHeight / 2) / h, 0.5f);
         rectTransform.offsetMin *= ratio;
         rectTransform.offsetMax *= ratio;
+                if (deltaHeight <= headerHeight)
+                {
+                    headerRect.offsetMin = Vector2.down * headerHeight;
+                } else
+                {
+                    headerRect.offsetMin = Vector2.down * deltaHeight;
+                }
         return;
       }
 

@@ -120,7 +120,7 @@ public class ObjectsPlacer : MonoBehaviour
                         }
                     }
 
-                    landmarkRawPositions[i] = new Vector3(pixelWidth - (handLandmarks[0].Landmark[i].X * pixelWidth), pixelHeight - heightDelta / 2 - (handLandmarks[0].Landmark[i].Y * trueHeight), 10 + zDelta*10);
+                    landmarkRawPositions[i] = new Vector3(pixelWidth - (handLandmarks[0].Landmark[i].X * pixelWidth), pixelHeight - heightDelta - (handLandmarks[0].Landmark[i].Y * trueHeight), 10 + zDelta*10);
                     landmarkNormalizedValues[i] = new Vector3(handLandmarks[0].Landmark[i].X, handLandmarks[0].Landmark[i].Y, zDelta);
                 }
             }
@@ -259,7 +259,7 @@ public class ObjectsPlacer : MonoBehaviour
         if (jewelProperties.Type == JewelProperties.JewelType.Ring)
         {        
             Quaternion rotation = Quaternion.LookRotation(landmarkSpheres[14].transform.position - landmarkSpheres[13].transform.position, palmNormal);
-            float distance = 0.35f;
+            float distance = 0.45f;
             Vector3 ringCoordinate = (1 - distance) * landmarkSpheres[13].transform.position + distance * landmarkSpheres[14].transform.position;
             jewel.transform.rotation = rotation;
             jewel.transform.position = ringCoordinate;

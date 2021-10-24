@@ -15,20 +15,24 @@ public class SizeButton : MonoBehaviour
 
     [SerializeField]
     private Sprite filledTexture;
+    [SerializeField]
+    private Sprite noFillTexture;
 
     [SerializeField]
-    private Button button;
+    private Image buttonRenderer;
     [SerializeField]
     private Text buttonText;
 
     [SerializeField]
     private Text[] otherButtonsTexts;
+    [SerializeField]
+    private Image[] otherButtonsRenderers;
 
     [SerializeField]
     private bool isActive = false;
 
     private Color black = new Color(0.2f, 0.2f, 0.2f);
-    private Color white = new Color(0.8f, 0.8f, 0.8f);
+    private Color white = new Color(0.85f, 0.85f, 0.85f);
 
     private enum JewelSizes
     {
@@ -68,10 +72,8 @@ public class SizeButton : MonoBehaviour
     {
         if (isActive)
         {
-            //buttonRenderer.sprite = filledTexture;
-            button.Select();
+            buttonRenderer.sprite = filledTexture;
             buttonText.color = black;
-            //buttonRenderer.size = new Vector2(140, 140);
         }
     }
 
@@ -88,10 +90,15 @@ public class SizeButton : MonoBehaviour
         {
             objectsPlacer.SetJewelSize(sizeValues.L);
         }
+        buttonRenderer.sprite = filledTexture;
         buttonText.color = black;
         foreach(Text buttonText in otherButtonsTexts)
         {
             buttonText.color = white;
+        }
+        foreach(Image spriteRenderer in otherButtonsRenderers)
+        {
+            spriteRenderer.sprite = noFillTexture;
         }
     }
 

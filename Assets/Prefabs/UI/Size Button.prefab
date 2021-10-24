@@ -61,8 +61,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 9e590112088e80349be6a554b917c17b, type: 2}
-  m_Color: {r: 0.93200004, g: 0.948, b: 0.95, a: 1}
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9047934, g: 0.92, b: 0.92, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -98,7 +98,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -152,7 +152,7 @@ MonoBehaviour:
   offsetAngle: 90
   offsetDistance: 12
   offset: {x: 0.00000071525585, y: -12}
-  color: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 0.14901961}
+  color: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 0.29803923}
   inset: 0
   blendMode: 0
   useCasterAlpha: 1
@@ -178,10 +178,11 @@ MonoBehaviour:
   objectsPlacer: {fileID: 0}
   jewelSize: 0
   filledTexture: {fileID: 21300000, guid: d28b41fc7093f184098d2bd122294f88, type: 3}
-  button: {fileID: 0}
-  buttonText: {fileID: 0}
-  otherButtonsRenderers: []
+  noFillTexture: {fileID: 21300000, guid: 339f193912b414c488bfa4c635f559d3, type: 3}
+  buttonRenderer: {fileID: 954273044225820773}
+  buttonText: {fileID: 954273044316693800}
   otherButtonsTexts: []
+  otherButtonsRenderers: []
   isActive: 0
 --- !u!1 &954273044316693802
 GameObject:

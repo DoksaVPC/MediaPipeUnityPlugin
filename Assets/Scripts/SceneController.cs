@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mediapipe.Unity;
+using Mediapipe.Unity.HandTracking;
 
 public class SceneController : MonoBehaviour
 {
     [SerializeField]
     private int sceneIndex;
+    [SerializeField]
+    private HandTrackingSolution solution;
 
     private void Update()
     {
         if (Input.GetButtonDown("Cancel")){
             if (sceneIndex > 1)
             {
-                ImageSourceProvider.imageSource.Stop();
-                SceneManager.LoadSceneAsync(sceneIndex - 1);
+                GoBack();
             }
             else
             {
@@ -23,5 +25,11 @@ public class SceneController : MonoBehaviour
             }
             
         }
+    }
+
+    public void GoBack()
+    {
+        solution.Stop();
+        SceneManager.LoadSceneAsync(sceneIndex - 1);
     }
 }
