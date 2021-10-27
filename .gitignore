@@ -30,3 +30,5 @@ Packages/com.github.homuler.mediapipe/Runtime/Resources/object_detection_3d.byte
 Packages/com.github.homuler.mediapipe/Runtime/Plugins/Protobuf*
 Packages/com.github.homuler.mediapipe/Runtime/Scripts/Protobuf/**/*.cs
 ARtry-on.apk
+PaolaMiraiApp.apk
+Packages/com.github.homuler.mediapipe/Runtime/Plugins/libmediapipe_c.dylib.meta

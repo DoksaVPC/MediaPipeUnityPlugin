@@ -2,37 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LeTai.TrueShadow;
 
-public class SizeButton : MonoBehaviour
+public class SizeButton : SwitchButton
 {
-    [SerializeField]
-    private ObjectsPlacer objectsPlacer;
-
     private SizeValues sizeValues = new SizeValues(0.85f, 1f, 1.15f);
 
     [SerializeField]
     private JewelSizes jewelSize;
-
-    [SerializeField]
-    private Sprite filledTexture;
-    [SerializeField]
-    private Sprite noFillTexture;
-
-    [SerializeField]
-    private Image buttonRenderer;
-    [SerializeField]
-    private Text buttonText;
-
-    [SerializeField]
-    private Text[] otherButtonsTexts;
-    [SerializeField]
-    private Image[] otherButtonsRenderers;
-
-    [SerializeField]
-    private bool isActive = false;
-
-    private Color black = new Color(0.2f, 0.2f, 0.2f);
-    private Color white = new Color(0.85f, 0.85f, 0.85f);
 
     private enum JewelSizes
     {
@@ -68,15 +45,6 @@ public class SizeButton : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        if (isActive)
-        {
-            buttonRenderer.sprite = filledTexture;
-            buttonText.color = black;
-        }
-    }
-
     public void SetJewelSize()
     {
         if(jewelSize == JewelSizes.S)
@@ -90,16 +58,7 @@ public class SizeButton : MonoBehaviour
         {
             objectsPlacer.SetJewelSize(sizeValues.L);
         }
-        buttonRenderer.sprite = filledTexture;
-        buttonText.color = black;
-        foreach(Text buttonText in otherButtonsTexts)
-        {
-            buttonText.color = white;
-        }
-        foreach(Image spriteRenderer in otherButtonsRenderers)
-        {
-            spriteRenderer.sprite = noFillTexture;
-        }
+        DisplayCurrentActive();
+        DisplayOthersInactive();
     }
-
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mediapipe;
 using Mediapipe.Unity;
 using Mediapipe.Unity.HandTracking;
@@ -17,6 +18,20 @@ public class ObjectsPlacer : MonoBehaviour
     private GameObject bonePrefab;
     [SerializeField]
     private JewelProperties jewelProperties;
+
+    [SerializeField]
+    private RectTransform[] tutorialLandmarkPositionsBracelet;
+    [SerializeField]
+    private RectTransform[] tutorialLandmarkPositionsRing;
+    [SerializeField]
+    private Sprite handIndicatorRingSprite;
+    private RectTransform[] tutorialLandmarkPositions;
+    [SerializeField]
+    private GameObject tutorialPanel;
+    [SerializeField]
+    private Image tutorialImage;
+    [SerializeField]
+    private GameObject sizesPanel;
 
     private GameObject[] landmarkSpheres = new GameObject[21];
     private GameObject[] handBones = new GameObject[21];
@@ -59,6 +74,14 @@ public class ObjectsPlacer : MonoBehaviour
         cameraSource = GameObject.FindGameObjectWithTag("ImageSource").GetComponent<CameraSource>();
         sceneInitializer = GameObject.FindGameObjectWithTag("Global Resource").GetComponent<SceneInitializer>();
         jewelProperties = sceneInitializer.JewelProperties;
+        if (jewelProperties.Type == JewelProperties.JewelType.Ring)
+        {
+            tutorialImage.sprite = handIndicatorRingSprite;
+            tutorialLandmarkPositions = tutorialLandmarkPositionsRing;
+        } else
+        {
+            tutorialLandmarkPositions = tutorialLandmarkPositionsBracelet;
+        }
         SetJewelSize(1f);
         for (int i = 0; i < landmarkSpheres.Length; i++)
         {
@@ -129,6 +152,11 @@ public class ObjectsPlacer : MonoBehaviour
 
     private void Update()
     {
+
+        if (tutorialPanel.activeInHierarchy)
+        {
+            CheckForCorrectPosition();
+        }
         float handSizeFactor = GetHandSize() * 2f;
         int handednessValue = 1;
         if (jewelProperties.Filps)
@@ -141,7 +169,7 @@ public class ObjectsPlacer : MonoBehaviour
             {
                 handednessValue = -1;
             }
-        }      
+        }
 
         for (int i = 0; i < landmarkSpheres.Length; i++)
         {
@@ -149,7 +177,7 @@ public class ObjectsPlacer : MonoBehaviour
             landmarkSpheres[i].transform.localScale = Vector3.one * (handSizeFactor * landmarkBaseSize * jewelSize);
         }
 
-        foreach(GameObject handBone in handBones)
+        foreach (GameObject handBone in handBones)
         {
             handBone.transform.localScale = new Vector3(handSizeFactor * landmarkBaseSize * 0.9f * jewelSize, handBone.transform.localScale.y, handSizeFactor * landmarkBaseSize * 0.9f * jewelSize);
         }
@@ -158,15 +186,16 @@ public class ObjectsPlacer : MonoBehaviour
         {
             jewel.transform.localScale = new Vector3(-1, handednessValue, 1) * (handSizeFactor * landmarkBaseSize * jewelSize);
             PlaceJewel();
-        }      
+        }
 
-        if(textureWidth == 0 || textureHeight == 0)
+        if (textureWidth == 0 || textureHeight == 0)
         {
             if (cameraSource.textureWidth > 0 && cameraSource.textureHeight > 0)
             {
                 SetDimensions();
             }
-        } else
+        }
+        else
         {
             if (!timerStarted)
             {
@@ -177,7 +206,7 @@ public class ObjectsPlacer : MonoBehaviour
 
         if (!landmarksActive)
         {
-            if (handRecognized)
+            if (handRecognized && !tutorialPanel.activeInHierarchy)
             {
                 ToggleLandmarks();
             }
@@ -311,5 +340,24 @@ public class ObjectsPlacer : MonoBehaviour
     public void SetJewelSize(float size)
     {
         jewelSize = size;
+    }
+
+    private void CheckForCorrectPosition()
+    {
+        float minDistance = pixelWidth / 13;
+        Debug.Log("min distance: " + minDistance);
+        Vector2 indexPos = cam.WorldToScreenPoint(landmarkSpheres[5].transform.position);      
+        Vector2 pinkyPos = cam.WorldToScreenPoint(landmarkSpheres[17].transform.position);     
+        Vector2 correctIndexPos = tutorialLandmarkPositions[0].position;
+        Vector2 correctPinkyPos = tutorialLandmarkPositions[1].position;
+        Debug.Log("real index: " + indexPos.x + ", " + indexPos.y);
+        Debug.Log("correct index: " + correctIndexPos.x + ", " + correctIndexPos.y);
+        Debug.Log("real pinky: " + pinkyPos.x + ", " + pinkyPos.y);
+        Debug.Log("correct pinky: " + correctPinkyPos.x + ", " + correctPinkyPos.y);
+        if (Vector2.Distance(indexPos, correctIndexPos) <= minDistance && Vector2.Distance(pinkyPos, correctPinkyPos) <= minDistance)
+        {
+            tutorialPanel.SetActive(false);
+            sizesPanel.SetActive(true);
+        }
     }
 }

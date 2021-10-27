@@ -270,7 +270,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.35
-  m_Text: Virtual selection
+  m_Text: Paola Mirai
 --- !u!222 &153626218
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1087,6 +1087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneIndex: 1
+  solution: {fileID: 0}
 --- !u!4 &1183372280
 Transform:
   m_ObjectHideFlags: 0
