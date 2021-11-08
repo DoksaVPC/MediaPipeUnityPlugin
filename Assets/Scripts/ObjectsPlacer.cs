@@ -47,7 +47,7 @@ public class ObjectsPlacer : MonoBehaviour
     private float pixelWidth;
     private float pixelHeight;
 
-    private Vector3[] landmarkNormalizedValues = new Vector3[21];
+    private Vector3[] palmLandmarkNoRecalibration = new Vector3[2];
     private Vector3[] landmarkRawPositions = new Vector3[21];
 
     private bool landmarksActive = false;
@@ -58,11 +58,20 @@ public class ObjectsPlacer : MonoBehaviour
     [SerializeField]
     private float handSwitchingMaxTime = 1f;
     private float handSwitchingRemainingTime;
-    private bool timerStarted = false;
 
     private const float landmarkBaseSize = 0.0008f;
     private const float zNegativeRecalibration = 0.25f;
     private float jewelSize;
+    [SerializeField]
+    private float maxHandSize;
+
+    private Handedness handedness;
+
+    public enum Handedness
+    {
+        Left,
+        Right
+    }
 
 
 
@@ -113,7 +122,7 @@ public class ObjectsPlacer : MonoBehaviour
         jewel.SetActive(false);
 
         graph.OnHandLandmarksOutput.AddListener(OnLandmarksOutput);
-        graph.OnHandednessOutput.AddListener(OnHandednessOutput);
+        //graph.OnHandednessOutput.AddListener(OnHandednessOutput);
     }
 
     private void OnHandednessOutput(List<ClassificationList> handedness)
@@ -137,14 +146,22 @@ public class ObjectsPlacer : MonoBehaviour
                     if (i != 0)
                     {
                         zDelta = handLandmarks[0].Landmark[i].Z;
+
+                        if (i == 5)
+                        {
+                            palmLandmarkNoRecalibration[0] = new Vector3(pixelWidth - (handLandmarks[0].Landmark[i].X * pixelWidth), pixelHeight - heightDelta - (handLandmarks[0].Landmark[i].Y * trueHeight), 10 + zDelta * 10);
+                        }
+                        if (i == 17)
+                        {
+                            palmLandmarkNoRecalibration[1] = new Vector3(pixelWidth - (handLandmarks[0].Landmark[i].X * pixelWidth), pixelHeight - heightDelta - (handLandmarks[0].Landmark[i].Y * trueHeight), 10 + zDelta * 10);
+                        }
+
                         if (zDelta < 0)
                         {
                             zDelta *= zNegativeRecalibration;
                         }
                     }
-
                     landmarkRawPositions[i] = new Vector3(pixelWidth - (handLandmarks[0].Landmark[i].X * pixelWidth), pixelHeight - heightDelta - (handLandmarks[0].Landmark[i].Y * trueHeight), 10 + zDelta*10);
-                    landmarkNormalizedValues[i] = new Vector3(handLandmarks[0].Landmark[i].X, handLandmarks[0].Landmark[i].Y, zDelta);
                 }
             }
         }
@@ -158,20 +175,24 @@ public class ObjectsPlacer : MonoBehaviour
             CheckForCorrectPosition();
         }
         float handSizeFactor = GetHandSize() * 2f;
-        int handednessValue = 1;
-        if (jewelProperties.Filps)
+        int flipY = 1;
+        int flipX = 1;
+
+        if (handedness == Handedness.Left)
         {
-            if (currentHand == "Left")
-            {
-                handednessValue = 1;
-            }
-            else
-            {
-                handednessValue = -1;
-            }
+            flipY = 1;
+        }
+        else
+        {
+            flipY = -1;
         }
 
-        for (int i = 0; i < landmarkSpheres.Length; i++)
+        if (!jewelProperties.Filps)
+        {
+            flipX = -1;
+        }
+
+            for (int i = 0; i < landmarkSpheres.Length; i++)
         {
             landmarkSpheres[i].transform.position = cam.ScreenToWorldPoint(landmarkRawPositions[i]);
             landmarkSpheres[i].transform.localScale = Vector3.one * (handSizeFactor * landmarkBaseSize * jewelSize);
@@ -184,7 +205,7 @@ public class ObjectsPlacer : MonoBehaviour
 
         if (jewel != null)
         {
-            jewel.transform.localScale = new Vector3(-1, handednessValue, 1) * (handSizeFactor * landmarkBaseSize * jewelSize);
+            jewel.transform.localScale = new Vector3(-1 * flipX, flipY, 1) * (handSizeFactor * landmarkBaseSize * jewelSize);
             PlaceJewel();
         }
 
@@ -195,26 +216,18 @@ public class ObjectsPlacer : MonoBehaviour
                 SetDimensions();
             }
         }
-        else
-        {
-            if (!timerStarted)
-            {
-                handSwitchingRemainingTime = handSwitchingMaxTime;
-                timerStarted = true;
-            }
-        }
 
         if (!landmarksActive)
         {
-            if (handRecognized && !tutorialPanel.activeInHierarchy)
+            if (!tutorialPanel.activeInHierarchy)
             {
                 ToggleLandmarks();
             }
         }
 
-        if (timerStarted)
+        if (!tutorialPanel.activeInHierarchy)
         {
-            CheckHandedness();
+            CheckForHandOutOfBounds();
         }
     }
 
@@ -229,7 +242,22 @@ public class ObjectsPlacer : MonoBehaviour
 
     private float GetHandSize()
     {
-        return Vector3.Distance(landmarkRawPositions[5], landmarkRawPositions[17]);
+        return Vector3.Distance(palmLandmarkNoRecalibration[0], palmLandmarkNoRecalibration[1]);
+    }
+
+    private void CheckForHandOutOfBounds()
+    {
+        if (GetHandSize() > maxHandSize)
+        {
+            if (landmarksActive)
+            {
+                ToggleLandmarks();
+            }
+            if (tutorialPanel.activeInHierarchy)
+            {
+                tutorialPanel.SetActive(false);
+            }
+        }
     }
 
     private void ToggleLandmarks()
@@ -277,13 +305,7 @@ public class ObjectsPlacer : MonoBehaviour
         Vector3 wristIndex = landmarkSpheres[17].transform.position - landmarkSpheres[0].transform.position;
         Vector3 wristPinky = landmarkSpheres[5].transform.position - landmarkSpheres[0].transform.position;
         Vector3 palmNormal;
-        if (currentHand == lastDetectedHand)
-        {
-            palmNormal = Vector3.Cross(wristIndex, wristPinky);
-        } else
-        {
-            palmNormal = Vector3.Cross(wristIndex, wristPinky) * -1;
-        }
+        palmNormal = Vector3.Cross(wristIndex, wristPinky);
         
         if (jewelProperties.Type == JewelProperties.JewelType.Ring)
         {        
@@ -345,19 +367,19 @@ public class ObjectsPlacer : MonoBehaviour
     private void CheckForCorrectPosition()
     {
         float minDistance = pixelWidth / 13;
-        Debug.Log("min distance: " + minDistance);
         Vector2 indexPos = cam.WorldToScreenPoint(landmarkSpheres[5].transform.position);      
         Vector2 pinkyPos = cam.WorldToScreenPoint(landmarkSpheres[17].transform.position);     
         Vector2 correctIndexPos = tutorialLandmarkPositions[0].position;
         Vector2 correctPinkyPos = tutorialLandmarkPositions[1].position;
-        Debug.Log("real index: " + indexPos.x + ", " + indexPos.y);
-        Debug.Log("correct index: " + correctIndexPos.x + ", " + correctIndexPos.y);
-        Debug.Log("real pinky: " + pinkyPos.x + ", " + pinkyPos.y);
-        Debug.Log("correct pinky: " + correctPinkyPos.x + ", " + correctPinkyPos.y);
         if (Vector2.Distance(indexPos, correctIndexPos) <= minDistance && Vector2.Distance(pinkyPos, correctPinkyPos) <= minDistance)
         {
             tutorialPanel.SetActive(false);
             sizesPanel.SetActive(true);
         }
+    }
+
+    public void SetHandedness(Handedness hand)
+    {
+        handedness = hand;
     }
 }

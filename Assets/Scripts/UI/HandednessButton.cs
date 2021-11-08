@@ -22,10 +22,12 @@ public class HandednessButton : SwitchButton
         if (handedness == Handedness.Right)
         {
             handIndication.transform.localScale = new Vector3(-1, 1, 1);
+            objectsPlacer.SetHandedness(ObjectsPlacer.Handedness.Right);
         }
         else
         {
             handIndication.transform.localScale = new Vector3(1, 1, 1);
+            objectsPlacer.SetHandedness(ObjectsPlacer.Handedness.Left);
         }
     }
 
