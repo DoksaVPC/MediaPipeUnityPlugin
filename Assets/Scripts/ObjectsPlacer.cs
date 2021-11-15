@@ -62,8 +62,7 @@ public class ObjectsPlacer : MonoBehaviour
     private const float landmarkBaseSize = 0.0008f;
     private const float zNegativeRecalibration = 0.25f;
     private float jewelSize;
-    [SerializeField]
-    private float maxHandSize;
+    private float maxHandDistance;
 
     private Handedness handedness;
 
@@ -80,6 +79,7 @@ public class ObjectsPlacer : MonoBehaviour
     {
         pixelWidth = cam.pixelWidth;
         pixelHeight = cam.pixelHeight;
+        maxHandDistance = pixelWidth / 1.85f;
         cameraSource = GameObject.FindGameObjectWithTag("ImageSource").GetComponent<CameraSource>();
         sceneInitializer = GameObject.FindGameObjectWithTag("Global Resource").GetComponent<SceneInitializer>();
         jewelProperties = sceneInitializer.JewelProperties;
@@ -247,15 +247,19 @@ public class ObjectsPlacer : MonoBehaviour
 
     private void CheckForHandOutOfBounds()
     {
-        if (GetHandSize() > maxHandSize)
+        Vector2 indexPos = cam.WorldToScreenPoint(landmarkSpheres[5].transform.position);
+        Vector2 pinkyPos = cam.WorldToScreenPoint(landmarkSpheres[17].transform.position);
+        Vector2 center = new Vector2(pixelWidth / 2, trueHeight / 2);
+        float distance1 = Vector2.Distance(indexPos, center);
+        float distance2 = Vector2.Distance(pinkyPos, center);
+        float distance3 = Vector3.Distance(indexPos, pinkyPos);
+        if (distance1 >= maxHandDistance || distance2 >= maxHandDistance || distance3 >= pixelWidth * 0.8f)
         {
-            if (landmarksActive)
+            ToggleLandmarks();
+            if (!tutorialPanel.activeInHierarchy)
             {
-                ToggleLandmarks();
-            }
-            if (tutorialPanel.activeInHierarchy)
-            {
-                tutorialPanel.SetActive(false);
+                sizesPanel.SetActive(false);
+                tutorialPanel.SetActive(true);
             }
         }
     }
@@ -373,8 +377,11 @@ public class ObjectsPlacer : MonoBehaviour
         Vector2 correctPinkyPos = tutorialLandmarkPositions[1].position;
         if (Vector2.Distance(indexPos, correctIndexPos) <= minDistance && Vector2.Distance(pinkyPos, correctPinkyPos) <= minDistance)
         {
-            tutorialPanel.SetActive(false);
-            sizesPanel.SetActive(true);
+            if (tutorialPanel.activeInHierarchy)
+            {
+                tutorialPanel.SetActive(false);
+                sizesPanel.SetActive(true);
+            }
         }
     }
 

@@ -14,4 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TryOnScene.unity
     guid: b84546b3ef2541a448456cef0711cd75
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: b20e8401ec249ae4a85889a9832e17b8,
+      type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: aa26c10fae7433c4a9f516a7d0f2af87,
+      type: 2}
