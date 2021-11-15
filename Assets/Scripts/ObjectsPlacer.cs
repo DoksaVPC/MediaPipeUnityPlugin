@@ -129,7 +129,7 @@ public class ObjectsPlacer : MonoBehaviour
     {
         if (handedness != null && handedness[0] != null && handedness[0].Classification[0] != null)
         {
-            Debug.Log(handedness[0].Classification[0].Label);
+            //Debug.Log(handedness[0].Classification[0].Label);
             lastDetectedHand = handedness[0].Classification[0].Label;
         }
     }

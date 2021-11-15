@@ -61,19 +61,19 @@ namespace Mediapipe.Unity.HandTracking {
       yield return imageSource.Play();
 
       if (!imageSource.isPrepared) {
-        Logger.LogError(TAG, "Failed to start ImageSource, exiting...");
+        //Logger.LogError(TAG, "Failed to start ImageSource, exiting...");
         yield break;
       }
       // NOTE: The screen will be resized later, keeping the aspect ratio.
       SetupScreen(screen, imageSource);
       screen.texture = imageSource.GetCurrentTexture();
 
-      Logger.LogInfo(TAG, $"Max Num Hands = {maxNumHands}");
-      Logger.LogInfo(TAG, $"Running Mode = {runningMode}");
+      //Logger.LogInfo(TAG, $"Max Num Hands = {maxNumHands}");
+      //Logger.LogInfo(TAG, $"Running Mode = {runningMode}");
 
       yield return graphInitRequest;
       if (graphInitRequest.isError) {
-        Logger.LogError(TAG, graphInitRequest.error);
+        //Logger.LogError(TAG, graphInitRequest.error);
         yield break;
       }
 

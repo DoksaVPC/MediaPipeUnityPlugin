@@ -73,7 +73,7 @@ namespace Mediapipe.Unity {
 
     public virtual IEnumerator Initialize() {
       configType = DetectConfigType();
-      Logger.LogInfo(TAG, $"Using {configType} config");
+      //Logger.LogInfo(TAG, $"Using {configType} config");
 
       if (configType == ConfigType.None) {
         throw new InvalidOperationException("Failed to detect config. Check if config is set to GraphRunner");
@@ -83,14 +83,14 @@ namespace Mediapipe.Unity {
       stopwatch = new Stopwatch();
       stopwatch.Start();
 
-      Logger.LogInfo(TAG, "Loading dependent assets...");
+      //Logger.LogInfo(TAG, "Loading dependent assets...");
       var assetRequests = RequestDependentAssets();
       yield return new WaitWhile(() => assetRequests.Any((request) => request.keepWaiting));
 
       var errors = assetRequests.Where((request) => request.isError).Select((request) => request.error).ToList();
       if (errors.Count > 0) {
         foreach (var error in errors) {
-          Logger.LogError(TAG, error);
+          //Logger.LogError(TAG, error);
         }
         throw new InternalException("Failed to prepare dependent assets");
       }
@@ -104,13 +104,13 @@ namespace Mediapipe.Unity {
       // TODO: not to call CloseAllPacketSources if calculatorGraph has not started.
       using (var status = calculatorGraph.CloseAllPacketSources()) {
         if (!status.ok) {
-          Logger.LogError(TAG, status.ToString());
+          //Logger.LogError(TAG, status.ToString());
         }
       }
 
       using (var status = calculatorGraph.WaitUntilDone()) {
         if (!status.ok) {
-          Logger.LogError(TAG, status.ToString());
+          //Logger.LogError(TAG, status.ToString());
         }
       }
 
@@ -263,7 +263,7 @@ namespace Mediapipe.Unity {
         inputVerticallyFlipped = !inputVerticallyFlipped;
       }
 
-      Logger.LogDebug($"input_rotation = {inputRotation}, input_horizontally_flipped = {inputHorizontallyFlipped}, input_vertically_flipped = {inputVerticallyFlipped}");
+      //Logger.LogDebug($"input_rotation = {inputRotation}, input_horizontally_flipped = {inputHorizontallyFlipped}, input_vertically_flipped = {inputVerticallyFlipped}");
 
       sidePacket.Emplace("input_rotation", new IntPacket((int)inputRotation));
       sidePacket.Emplace("input_horizontally_flipped", new BoolPacket(inputHorizontallyFlipped));
@@ -399,7 +399,7 @@ namespace Mediapipe.Unity {
 
       static bool Next<T>(OutputStreamPoller<T> poller, Packet<T> packet, string streamName) {
         if (!poller.Next(packet)) {
-          Logger.LogWarning($"Failed to get next value from {streamName}, so there may be errors inside the calculatorGraph. See logs for more details");
+          //Logger.LogWarning($"Failed to get next value from {streamName}, so there may be errors inside the calculatorGraph. See logs for more details");
           return false;
         }
         return true;

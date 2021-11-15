@@ -13,7 +13,7 @@ namespace Mediapipe.Unity {
       var bootstrapObj = GameObject.Find("Bootstrap");
 
       if (bootstrapObj == null) {
-        Logger.LogError(TAG, "Bootstrap is not found. Please play 'Start Scene' first");
+        //Logger.LogError(TAG, "Bootstrap is not found. Please play 'Start Scene' first");
         yield break;
       }
 

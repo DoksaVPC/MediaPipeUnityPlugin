@@ -39,7 +39,7 @@ using Mediapipe.Unity;
 
             cameraSource = imageSource.GetComponent<CameraSource>();
 
-            Debug.Log("Initializing AssetLoader...");
+            //Debug.Log("Initializing AssetLoader...");
             switch (assetLoaderType)
             {
                 case AssetLoaderType.AssetBundle:
@@ -66,17 +66,17 @@ using Mediapipe.Unity;
             DecideInferenceMode();
             if (inferenceMode == InferenceMode.GPU)
             {
-                Debug.Log("Initializing GPU resources...");
+                //Debug.Log("Initializing GPU resources...");
                 yield return GpuManager.Initialize();
             }
 
-            Debug.Log("Preparing ImageSource...");
+            //Debug.Log("Preparing ImageSource...");
             ImageSourceProvider.SwitchSource(imageSource.GetComponent<CameraSource>());
             DontDestroyOnLoad(imageSource);
             DontDestroyOnLoad(gameObject);
             isFinished = true;
 
-            Debug.Log("Loading hand tracking scene...");
+            //Debug.Log("Loading hand tracking scene...");
             var sceneLoadReq = SceneManager.LoadSceneAsync(1);
             yield return new WaitUntil(() => sceneLoadReq.isDone);
         }
@@ -86,7 +86,7 @@ using Mediapipe.Unity;
 #if UNITY_EDITOR_OSX || UNITY_EDITOR_WIN
             if (preferableInferenceMode == InferenceMode.GPU)
             {
-                Debug.LogWarning("Current platform does not support GPU inference mode, so falling back to CPU mode");
+                //Debug.LogWarning("Current platform does not support GPU inference mode, so falling back to CPU mode");
             }
             inferenceMode = InferenceMode.CPU;
 #else
