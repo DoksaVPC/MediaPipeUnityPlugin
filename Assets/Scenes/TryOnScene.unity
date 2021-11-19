@@ -2969,18 +2969,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52c162dc854d2f24fa639ba0623de5ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1459452419 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5378940216853263141, guid: e3c7ca32520e5c945a8c408d70898710,
-    type: 3}
-  m_PrefabInstance: {fileID: 497008917}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1459452421 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1052111823668524876, guid: e3c7ca32520e5c945a8c408d70898710,
@@ -3988,11 +3976,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 525188285875488021, guid: e3c7ca32520e5c945a8c408d70898710,
         type: 3}
-      propertyPath: handedness
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 525188285875488021, guid: e3c7ca32520e5c945a8c408d70898710,
-        type: 3}
       propertyPath: objectsPlacer
       value: 
       objectReference: {fileID: 26972808}
@@ -4023,11 +4006,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 525188285875488021, guid: e3c7ca32520e5c945a8c408d70898710,
         type: 3}
-      propertyPath: otherButtonsRenderers.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 525188285875488021, guid: e3c7ca32520e5c945a8c408d70898710,
-        type: 3}
       propertyPath: otherButtonsDropShadow.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -4043,14 +4021,14 @@ PrefabInstance:
       objectReference: {fileID: 1459452421}
     - target: {fileID: 525188285875488021, guid: e3c7ca32520e5c945a8c408d70898710,
         type: 3}
-      propertyPath: otherButtonsRenderers.Array.data[0]
-      value: 
-      objectReference: {fileID: 1459452419}
-    - target: {fileID: 525188285875488021, guid: e3c7ca32520e5c945a8c408d70898710,
-        type: 3}
       propertyPath: otherButtonsDropShadow.Array.data[0]
       value: 
       objectReference: {fileID: 1459452417}
+    - target: {fileID: 1052111823668524876, guid: e3c7ca32520e5c945a8c408d70898710,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5378940215460878049, guid: e3c7ca32520e5c945a8c408d70898710,
         type: 3}
       propertyPath: m_RootOrder
