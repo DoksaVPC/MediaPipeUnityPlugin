@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
   m_DefaultGroup: e212a10657797a54596b855e8eb00307
+  m_CachedHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -108,3 +111,14 @@ MonoBehaviour:
     m_Settings: {fileID: 11400000}
     m_NextInstanceId: 0
     m_RegisteredServiceTypeRefs: []
+    m_GlobalProfileVariablesInfos:
+    - key: PrivateIpAddress
+      value: 172.28.96.1
+    - key: PrivateIpAddress_1
+      value: 192.168.30.1
+    - key: PrivateIpAddress_2
+      value: 192.168.88.1
+    - key: PrivateIpAddress_3
+      value: 192.168.1.15
+    - key: PrivateIpAddress_4
+      value: 172.30.96.1
