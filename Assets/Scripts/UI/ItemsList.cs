@@ -77,7 +77,6 @@ public class ItemsList : MonoBehaviour
 
     private void Start()
     {
-        int itemsCount = 0;
         foreach(Row row in rows)
         {
             GameObject rowContainer = Instantiate(itemsRowContainerPrefab, itemsContainer.transform);
@@ -85,8 +84,7 @@ public class ItemsList : MonoBehaviour
             itemsRowContainer.InitializeRow(row.Name, parentScrollRect);
             foreach(Item item in row.Items)
             {
-                itemsRowContainer.CreateItemPanel(item.Name, item.Label, item.Jewel, itemsCount, item.Properties, sceneInitializer);
-                itemsCount++;
+                itemsRowContainer.CreateItemPanel(item.Name, item.Label, item.Jewel, item.Properties, sceneInitializer);
             }
         }
     }

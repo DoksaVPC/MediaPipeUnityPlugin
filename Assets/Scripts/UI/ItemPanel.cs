@@ -10,17 +10,17 @@ public class ItemPanel : MonoBehaviour
     [SerializeField]
     private Text itemLabelText;
     [SerializeField]
-    private RawImage rawImage;
+    private GameObject modelContainer;
     [SerializeField]
     private Button button;
 
     private JewelProperties jewelProperties;
     private SceneInitializer sceneInitializer;
 
-    public void InitializeItem(string itemName, string itemLabel, RenderTexture texture, JewelProperties properties, SceneInitializer initializer)
+    public void InitializeItem(string itemName, string itemLabel, GameObject model, JewelProperties properties, SceneInitializer initializer)
     {
         SetItemTexts(itemName, itemLabel);
-        SetTexture(texture);
+        SetUIModel(model);
         sceneInitializer = initializer;
         jewelProperties = properties;
         button.onClick.AddListener(StartARScene);
@@ -32,8 +32,8 @@ public class ItemPanel : MonoBehaviour
         itemLabelText.text = itemLabel;
     }
 
-    private void SetTexture(RenderTexture texture) {
-        rawImage.texture = texture;
+    private void SetUIModel(GameObject model) {
+        Instantiate(model, modelContainer.transform);
     }
 
     private void StartARScene()
