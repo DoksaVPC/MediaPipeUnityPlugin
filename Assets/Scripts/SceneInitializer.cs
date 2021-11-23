@@ -35,6 +35,7 @@ using Mediapipe.Unity;
             GlobalConfigManager.SetFlags();
 
             ApplicationChrome.statusBarState = ApplicationChrome.States.Visible;
+            Application.targetFrameRate = 60;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
             cameraSource = imageSource.GetComponent<CameraSource>();
