@@ -225,10 +225,10 @@ public class ObjectsPlacer : MonoBehaviour
             }
         }
 
-        if (!tutorialPanel.activeInHierarchy)
-        {
-            CheckForHandOutOfBounds();
-        }
+        //if (!tutorialPanel.activeInHierarchy)
+        //{
+        //    CheckForHandOutOfBounds();
+        //}
     }
 
     private void SetDimensions()
