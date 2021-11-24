@@ -210,8 +210,8 @@ MonoBehaviour:
   _zoom: 1
   _effectGradient:
     serializedVersion: 2
-    key0: {r: 0.86588234, g: 0.8909804, b: 0.9411765, a: 1}
-    key1: {r: 0.93200004, g: 0.948, b: 0.98, a: 1}
+    key0: {r: 0.8847059, g: 0.9035294, b: 0.9411765, a: 1}
+    key1: {r: 0.9313725, g: 0.95179737, b: 0.98039216, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
