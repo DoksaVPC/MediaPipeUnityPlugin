@@ -215,6 +215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRectTransform: {fileID: 1064900358}
+  isSelectionScreen: 1
+  verticalLayoutGroup: {fileID: 279778057}
 --- !u!1 &200091295
 GameObject:
   m_ObjectHideFlags: 0

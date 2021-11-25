@@ -2865,7 +2865,7 @@ MonoBehaviour:
     m_Left: 0
     m_Right: 0
     m_Top: 0
-    m_Bottom: 92
+    m_Bottom: 120
   m_ChildAlignment: 7
   m_Spacing: -5
   m_ChildForceExpandWidth: 0
@@ -4007,6 +4007,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRectTransform: {fileID: 531671235}
+  isSelectionScreen: 0
+  verticalLayoutGroup: {fileID: 0}
 --- !u!1001 &5378940216571999628
 PrefabInstance:
   m_ObjectHideFlags: 0
