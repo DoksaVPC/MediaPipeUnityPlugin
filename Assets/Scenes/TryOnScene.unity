@@ -3453,6 +3453,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3259285889726014655, guid: 5713b959e3c77a58fb258133fc8e4aef,
         type: 3}
+      propertyPath: fitMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259285889726014655, guid: 5713b959e3c77a58fb258133fc8e4aef,
+        type: 3}
       propertyPath: headerRect
       value: 
       objectReference: {fileID: 2010846507}

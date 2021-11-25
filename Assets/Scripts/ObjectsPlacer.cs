@@ -39,8 +39,8 @@ public class ObjectsPlacer : MonoBehaviour
 
     private CameraSource cameraSource;
     private SceneInitializer sceneInitializer;
-    private float textureWidth;
-    private float textureHeight;
+    private float textureWidth = 0;
+    private float textureHeight = 0;
     private float aspectRatio;
     private float heightDelta;
     private float trueHeight;
@@ -138,7 +138,7 @@ public class ObjectsPlacer : MonoBehaviour
     {
         if (handLandmarks != null && handLandmarks[0] != null && pixelWidth > 0)
         {
-            if (textureWidth > 0 && textureHeight > 0)
+            if (textureWidth > 100 && textureHeight > 100)
             {
                 for (int i = 0; i < landmarkRawPositions.Length; i++)
                 {
@@ -162,6 +162,14 @@ public class ObjectsPlacer : MonoBehaviour
                         }
                     }
                     landmarkRawPositions[i] = new Vector3(pixelWidth - (handLandmarks[0].Landmark[i].X * pixelWidth), pixelHeight - heightDelta - (handLandmarks[0].Landmark[i].Y * trueHeight), 10 + zDelta*10);
+                    if (i == 5)
+                    {
+                        Debug.Log("index landmark y:" + handLandmarks[0].Landmark[i].Y);
+                    }
+                    if (i == 17)
+                    {
+                        Debug.Log("pinky landmark y:" + handLandmarks[0].Landmark[i].Y);
+                    }
                 }
             }
         }
@@ -211,7 +219,7 @@ public class ObjectsPlacer : MonoBehaviour
 
         if (textureWidth == 0 || textureHeight == 0)
         {
-            if (cameraSource.textureWidth > 0 && cameraSource.textureHeight > 0)
+            if (cameraSource.textureWidth > 100 && cameraSource.textureHeight > 0)
             {
                 SetDimensions();
             }
@@ -235,7 +243,14 @@ public class ObjectsPlacer : MonoBehaviour
     {
         textureWidth = cameraSource.textureWidth;
         textureHeight = cameraSource.textureHeight;
-        aspectRatio = textureWidth / textureHeight;
+        if(textureWidth > textureHeight)
+        {
+            aspectRatio = textureWidth / textureHeight;
+        }
+        else
+        {
+            aspectRatio = textureHeight / textureWidth;
+        }
         trueHeight = pixelWidth * aspectRatio;
         heightDelta = pixelHeight - trueHeight;
     }
@@ -371,15 +386,12 @@ public class ObjectsPlacer : MonoBehaviour
     private void CheckForCorrectPosition()
     {
         float minDistance = pixelWidth / 13;
-        Debug.Log("minDistance: " + minDistance);
-        Vector2 indexPos = cam.WorldToScreenPoint(landmarkSpheres[5].transform.position);
-        Debug.Log("indexPos: " + indexPos);
-        Vector2 pinkyPos = cam.WorldToScreenPoint(landmarkSpheres[17].transform.position);
-        Debug.Log("pinkyPos: " + pinkyPos);
+        Vector2 indexPos = landmarkRawPositions[5];
+        //Debug.Log("indexPos: " + indexPos);
+        Vector2 pinkyPos = landmarkRawPositions[17];
+        //Debug.Log("pinkyPos: " + pinkyPos);
         Vector2 correctIndexPos = tutorialLandmarkPositions[0].position;
-        Debug.Log("correctIndexPos: " + correctIndexPos);
         Vector2 correctPinkyPos = tutorialLandmarkPositions[1].position;
-        Debug.Log("correctPinkyPos: " + correctPinkyPos);
         if (Vector2.Distance(indexPos, correctIndexPos) <= minDistance && Vector2.Distance(pinkyPos, correctPinkyPos) <= minDistance)
         {
             if (tutorialPanel.activeInHierarchy)
