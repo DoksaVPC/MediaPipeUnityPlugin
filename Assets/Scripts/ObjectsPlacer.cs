@@ -77,8 +77,8 @@ public class ObjectsPlacer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pixelWidth = cam.pixelWidth;
-        pixelHeight = cam.pixelHeight;
+        pixelWidth = Screen.width;
+        pixelHeight = Screen.height;
         maxHandDistance = pixelWidth / 1.85f;
         cameraSource = GameObject.FindGameObjectWithTag("ImageSource").GetComponent<CameraSource>();
         sceneInitializer = GameObject.FindGameObjectWithTag("Global Resource").GetComponent<SceneInitializer>();
@@ -225,10 +225,10 @@ public class ObjectsPlacer : MonoBehaviour
             }
         }
 
-        //if (!tutorialPanel.activeInHierarchy)
-        //{
-        //    CheckForHandOutOfBounds();
-        //}
+        if (!tutorialPanel.activeInHierarchy)
+        {
+            CheckForHandOutOfBounds();
+        }
     }
 
     private void SetDimensions()
@@ -371,10 +371,15 @@ public class ObjectsPlacer : MonoBehaviour
     private void CheckForCorrectPosition()
     {
         float minDistance = pixelWidth / 13;
-        Vector2 indexPos = cam.WorldToScreenPoint(landmarkSpheres[5].transform.position);      
-        Vector2 pinkyPos = cam.WorldToScreenPoint(landmarkSpheres[17].transform.position);     
+        Debug.Log("minDistance: " + minDistance);
+        Vector2 indexPos = cam.WorldToScreenPoint(landmarkSpheres[5].transform.position);
+        Debug.Log("indexPos: " + indexPos);
+        Vector2 pinkyPos = cam.WorldToScreenPoint(landmarkSpheres[17].transform.position);
+        Debug.Log("pinkyPos: " + pinkyPos);
         Vector2 correctIndexPos = tutorialLandmarkPositions[0].position;
+        Debug.Log("correctIndexPos: " + correctIndexPos);
         Vector2 correctPinkyPos = tutorialLandmarkPositions[1].position;
+        Debug.Log("correctPinkyPos: " + correctPinkyPos);
         if (Vector2.Distance(indexPos, correctIndexPos) <= minDistance && Vector2.Distance(pinkyPos, correctPinkyPos) <= minDistance)
         {
             if (tutorialPanel.activeInHierarchy)
